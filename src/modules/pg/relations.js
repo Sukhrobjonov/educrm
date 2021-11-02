@@ -45,6 +45,7 @@ module.exports = async function (db) {
         foreignKey: {
             name: "user_id",
             allowNull: false,
+            unique: true,
         },
     });
 
@@ -52,6 +53,7 @@ module.exports = async function (db) {
         foreignKey: {
             name: "user_id",
             allowNull: false,
+            unique: true,
         },
     });
 };

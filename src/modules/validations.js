@@ -39,6 +39,7 @@ module.exports = class Validations {
                     .string()
                     .regex(/^[A-Za-z]{2,}[_-]?[A-Za-z0-9]{2,}$/)
                     .required()
+                    .lowercase()
                     .error(new error(400, "Username is invalid")),
                 password: joi
                     .string()
@@ -62,7 +63,7 @@ module.exports = class Validations {
                     .string()
                     .required()
                     .regex(
-                        /\+\^998(9[012345789]|6[125679]|7[01234569])[0-9]{7}$/
+                        /^\+998(9[012345789]|6[125679]|7[01234569])[0-9]{7}$/
                     )
                     .error(new error(400, "Phone number is invalid")),
                 skills: joi

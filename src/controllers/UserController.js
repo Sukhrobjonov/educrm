@@ -72,7 +72,7 @@ module.exports = class UserController {
                 message: "User created successfully",
             });
         } catch (error) {
-            if (error.code === "Validation error") {
+            if (error.message === "Validation error") {
                 error.code == 400;
                 error.message = "Username already exists";
             }
