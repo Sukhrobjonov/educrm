@@ -33,7 +33,7 @@ module.exports = class UserController {
                 user_id: user.user_id,
             });
 
-            let token = await createToken({
+            const token = await createToken({
                 session_id: session.session_id,
             });
 
