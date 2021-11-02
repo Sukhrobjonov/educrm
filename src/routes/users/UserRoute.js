@@ -1,6 +1,7 @@
 const {
     SignInPostController,
     CreateUserPostController,
+    UserGetController,
 } = require("../../controllers/UserController");
 const authMiddleware = require("../../middlewares/authMiddleware");
 const permissionMiddleware = require("../../middlewares/permissionMiddleware");
@@ -13,6 +14,7 @@ router.post(
     [authMiddleware, permissionMiddleware],
     CreateUserPostController
 );
+router.get("/", [authMiddleware, permissionMiddleware], UserGetController);
 
 module.exports = {
     path: "/users",
