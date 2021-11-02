@@ -53,9 +53,9 @@ Request body:
 
 `400 - Username || Password || Gender || Name is invalid`
 
-`400 Username already exists`
+`400 - Username already exists`
 
-`500 Internal Server Error`
+`500 - Internal Server Error`
 
 #### 3. User Get Endpoit
 
@@ -71,8 +71,16 @@ Headers:
 
 Permissions: `Admin`
 
+Query body:
+
+| Name   | Description | Type   | Required |
+| ------ | ----------- | ------ | -------- |
+| order  | DESC ,ASC   | String | false    |
+| limit  | 15          | Number | false    |
+| offset | 0           | Number | false    |
+
 ##### Response status codes:
 
-`200 Users list`
+`200 - Users list`
 
-`500 Internal Server Error`
+`500 - Internal Server Error`
