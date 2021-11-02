@@ -70,14 +70,31 @@ module.exports = class TeacherController {
                 error.message = "This user is already teacher";
                 error.code = 400;
             }
-            // } else if (
-            //     error.message ===
-            //         `insert or update on table \"teachers\" violates foreign key constraint \"teachers_user_id_fkey\"` ||
-            //     `"invalid input syntax for type uuid: \":42744782-5fc2-4ab8-8555-1b73063c2033\"`
-            // ) {
-            //     error.code = 400;
-            //     error.message = "User id is invalid";
-            // }
+            next(error);
+        }
+    }
+
+    static async TeacherDeleteController(req, res, next) {
+        try {
+            permissionChecker("admin", req.user_permissions, res.error);
+
+            const teacher_id = req.params.teacher_id;
+
+            const teacher = await req.db.teachers.destroy({
+                where: { teacher_id },
+            });
+
+            if (!teacher) throw new res.error(404, "Teacher not found");
+
+            res.status(200).json({
+                ok: true,
+                message: "Deleted successfully",
+            });
+        } catch (error) {
+            if (error.message === "Validation error") {
+                error.message = "This user is already teacher";
+                error.code = 400;
+            }
             next(error);
         }
     }
