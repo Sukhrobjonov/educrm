@@ -98,4 +98,41 @@ module.exports = class TeacherController {
             next(error);
         }
     }
+
+    static async TeacherGetController(req, res, next) {
+        try {
+            permissionChecker("admin", req.user_permissions, res.error);
+
+            const page = req.query.page ? req.query.page - 1 : 0;
+            const limit = req.query.limit || 15;
+            const order = req.query.order == "DESC" ? "DESC" : "ASC";
+
+            const teachers = await req.db.teachers.findAll({
+                raw: true,
+                include: [
+                    {
+                        model: req.db.users,
+                        attributes: { exclude: ["user_password"] },
+                    },
+                ],
+                limit: limit,
+                offset: page * 15,
+                order: [["createdAt", order]],
+            });
+
+            res.status(200).json({
+                ok: true,
+                message: "Teachers list",
+                data: {
+                    teachers,
+                },
+            });
+        } catch (error) {
+            if (error.message === "Validation error") {
+                error.message = "This user is already teacher";
+                error.code = 400;
+            }
+            next(error);
+        }
+    }
 };
