@@ -4,7 +4,7 @@ module.exports = async (sequelize, Sequelize) => {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
             allowNull: false,
-            primaryKey,
+            primaryKey: true,
         },
 
         session_useragent: {

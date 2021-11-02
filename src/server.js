@@ -21,6 +21,7 @@ async function server(mode) {
         app.use(express.urlencoded({ extended: true }));
 
         if (mode == "dev") app.use(morgan("dev"));
+        // console.log(db);
     } catch (error) {
         console.log(`SERVER ERROR: ${error}`);
     } finally {
