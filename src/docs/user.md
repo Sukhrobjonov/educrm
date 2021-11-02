@@ -57,7 +57,7 @@ Request body:
 
 `500 Internal Server Error`
 
-#### User Get Endpoit
+#### 3. User Get Endpoit
 
 ##### Request
 
