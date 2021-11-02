@@ -36,8 +36,7 @@ Headers:
 
 `Authorization: "TOKEN"`
 
-Permissions:
-`Admin`
+Permissions: `Admin`
 
 Request body:
 
@@ -70,9 +69,7 @@ Headers:
 
 `Authorization: "TOKEN"`
 
-Permissions:
-
-`Admin`
+Permissions: `Admin`
 
 ##### Response status codes:
 
