@@ -8,7 +8,7 @@ module.exports = async (sequelize, Sequelize) => {
         },
 
         course_name: {
-            type: Sequelize.STRING(64),
+            type: Sequelize.STRING(128),
             allowNull: false,
         },
 
