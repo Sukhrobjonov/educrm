@@ -10,6 +10,5 @@ module.exports = async function init(db) {
             user_gender: "male",
             user_password: await genHash("admin"),
         });
-        console.log(admin.dataValues);
     }
 };
