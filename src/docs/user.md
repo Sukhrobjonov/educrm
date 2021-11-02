@@ -33,6 +33,7 @@ Request body:
 Headers:
 
 `Content-Type: "application/json"`
+
 `Authorization: "TOKEN"`
 
 Permissions:
@@ -66,6 +67,7 @@ Request body:
 Headers:
 
 `Content-Type: "application/json"`
+
 `Authorization: "TOKEN"`
 
 Permissions:
@@ -75,4 +77,5 @@ Permissions:
 ##### Response status codes:
 
 `200 Users list`
+
 `500 Internal Server Error`
