@@ -13,6 +13,7 @@ module.exports = class Validations {
                 username: joi
                     .string()
                     .max(32)
+                    .lowercase()
                     .regex(/^[A-Za-z]{2,}[_-]?[A-Za-z0-9]{2,}$/)
                     .required()
                     .error(new error(400, "Username is invalid")),

@@ -1,6 +1,11 @@
+const permissionChecker = require("../helpers/permissionChecker");
+const permissionMiddleware = require("../middlewares/permissionMiddleware");
 const { genHash, compareHash } = require("../modules/bcrypt");
 const { createToken } = require("../modules/jwt");
-const { SignInValidation } = require("../modules/validations");
+const {
+    SignInValidation,
+    SignUpValidation,
+} = require("../modules/validations");
 
 module.exports = class UserController {
     static async SignInPostController(req, res, next) {
@@ -51,8 +56,26 @@ module.exports = class UserController {
 
     static async CreateUserPostController(req, res, next) {
         try {
-            //
+            permissionChecker("admin", req.user_permissions, res.error);
+
+            const data = await SignUpValidation(req.body, res.error);
+
+            const user = await req.db.users.create({
+                user_name: data.name,
+                user_username: data.username,
+                user_gender: data.gender,
+                user_password: await genHash(data.password),
+            });
+
+            res.status(201).json({
+                ok: true,
+                message: "User created successfully",
+            });
         } catch (error) {
+            if (error.code === "Validation error") {
+                error.code == 400;
+                error.message = "Username already exists";
+            }
             next(error);
         }
     }
