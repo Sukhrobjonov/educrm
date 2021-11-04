@@ -11,27 +11,46 @@ const {
 
 const router = require("express").Router();
 
-router.use([authMiddleware, permissionMiddleware]);
+// router.use([authMiddleware, permissionMiddleware]);
 
 router.post(
     "/",
-    expressFileUploadMiddleware({
-        abortOnLimit: true,
-        safeFileNames: true,
-    }),
+    [
+        authMiddleware,
+        permissionMiddleware,
+        expressFileUploadMiddleware({
+            abortOnLimit: true,
+            safeFileNames: true,
+        }),
+    ],
     CourseCreatePostController
 );
 router.get("/", CourseGetController);
 router.put(
     "/:course_id",
-    expressFileUploadMiddleware({
-        abortOnLimit: true,
-        safeFileNames: true,
-    }),
+    [
+        authMiddleware,
+        permissionMiddleware,
+        expressFileUploadMiddleware({
+            abortOnLimit: true,
+            safeFileNames: true,
+        }),
+    ],
     CourseUpdetePutController
 );
 router.get("/:course_id", CourseGetOneController);
-router.delete("/:course_id", CourseDeleteController);
+router.delete(
+    "/:course_id",
+    [
+        authMiddleware,
+        permissionMiddleware,
+        expressFileUploadMiddleware({
+            abortOnLimit: true,
+            safeFileNames: true,
+        }),
+    ],
+    CourseDeleteController
+);
 
 module.exports = {
     path: "/courses",

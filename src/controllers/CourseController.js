@@ -185,8 +185,6 @@ module.exports = class CourseController {
 
             if (!course) throw new res.error(404, "Course not found");
 
-            // console.log(course);
-
             if (!course.course_photo === null) {
                 fs.unlink(
                     path.join(
