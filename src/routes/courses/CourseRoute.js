@@ -3,6 +3,7 @@ const permissionMiddleware = require("../../middlewares/permissionMiddleware");
 const expressFileUploadMiddleware = require("express-fileupload");
 const {
     CourseCreatePostController,
+    CourseGetController,
 } = require("../../controllers/CourseController");
 
 const router = require("express").Router();
@@ -17,9 +18,9 @@ router.post(
     }),
     CourseCreatePostController
 );
+router.get("/", CourseGetController);
 // router.put("/:course_id");
 // router.delete("/:teacher_id");
-// router.get("/");
 // router.get("/:course_id");
 
 module.exports = {

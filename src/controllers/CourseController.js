@@ -47,4 +47,27 @@ module.exports = class CourseController {
             next(error);
         }
     }
+
+    static async CourseGetController(req, res, next) {
+        try {
+            const limit = req.query.limit || 15;
+            const offset = req.query.offset - 1 || 0;
+            const order = req.query.order == "DESC" ? "DESC" : "ASC";
+
+            const courses = await req.db.courses.findAll({
+                raw: true,
+                limit,
+                offset: offset * 15,
+                order: [["createdAt", order]],
+            });
+
+            res.status(200).json({
+                ok: true,
+                message: "Courses list",
+                courses: courses,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 };
