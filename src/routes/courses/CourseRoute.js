@@ -6,6 +6,7 @@ const {
     CourseGetController,
     CourseUpdetePutController,
     CourseGetOneController,
+    CourseDeleteController,
 } = require("../../controllers/CourseController");
 
 const router = require("express").Router();
@@ -30,8 +31,7 @@ router.put(
     CourseUpdetePutController
 );
 router.get("/:course_id", CourseGetOneController);
-
-// router.delete("/:teacher_id");
+router.delete("/:course_id", CourseDeleteController);
 
 module.exports = {
     path: "/courses",

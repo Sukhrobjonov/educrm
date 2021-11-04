@@ -169,4 +169,51 @@ module.exports = class CourseController {
             next(error);
         }
     }
+
+    static async CourseDeleteController(req, res, next) {
+        try {
+            permissionChecker("admin", req.user_permissions, res.error);
+
+            const course_id = req.params.course_id;
+
+            const course = await req.db.courses.findOne({
+                where: {
+                    course_id,
+                },
+                raw: true,
+            });
+
+            if (!course) throw new res.error(404, "Course not found");
+
+            // console.log(course);
+
+            if (!course.course_photo === null) {
+                fs.unlink(
+                    path.join(
+                        __dirname,
+                        "..",
+                        "public",
+                        "uploads",
+                        course.course_photo
+                    ),
+                    () => {}
+                );
+            }
+
+            console.log(course);
+
+            await req.db.courses.destroy({
+                where: {
+                    course_id,
+                },
+            });
+
+            res.status(200).json({
+                ok: true,
+                message: "Course deleted successfully",
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 };
