@@ -1,8 +1,8 @@
-# Course Route Requests
+## Course Route Requests
 
-### 1. Course Create Post Endpoint
+#### 1. Course Create Post Endpoint
 
-#### Request
+##### Request
 
 `SERVER_URL/courses/`
 
@@ -23,7 +23,7 @@ Request body:
 | price       | Course price           | Number | true     |
 | photo       | Course photo           | File   | false    |
 
-#### Response status codes
+##### Response status codes
 
 `201 - Course created successfully`
 
