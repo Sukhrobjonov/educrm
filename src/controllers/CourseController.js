@@ -65,7 +65,10 @@ module.exports = class CourseController {
             res.status(200).json({
                 ok: true,
                 message: "Courses list",
-                courses: courses,
+                data: {
+                    courses:
+                        courses.length === 0 ? "No courses available" : courses,
+                },
             });
         } catch (error) {
             next(error);

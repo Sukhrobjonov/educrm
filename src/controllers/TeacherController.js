@@ -124,7 +124,10 @@ module.exports = class TeacherController {
                 ok: true,
                 message: "Teachers list",
                 data: {
-                    teachers,
+                    teachers:
+                        teachers.length === 0
+                            ? "No teachers available"
+                            : teachers,
                 },
             });
         } catch (error) {
