@@ -1,5 +1,8 @@
 const permissionChecker = require("../helpers/permissionChecker");
-const { AddApplicantValidation } = require("../modules/validations");
+const {
+    AddApplicantValidation,
+    UpdateApplicantValidation,
+} = require("../modules/validations");
 
 module.exports = class ApplicantController {
     static async ApplicantGetController(req, res, next) {
@@ -19,6 +22,15 @@ module.exports = class ApplicantController {
                 limit,
                 offset: page * limit,
                 order: [["createdAt", oreder]],
+                include: [
+                    {
+                        model: req.db.users,
+                        attributes: { exclude: ["user_password"] },
+                    },
+                    {
+                        model: req.db.courses,
+                    },
+                ],
             });
 
             res.status(200).json({
@@ -27,8 +39,8 @@ module.exports = class ApplicantController {
                 data: {
                     applicants:
                         applicants.length === 0
-                            ? "No applicants available"
-                            : applications,
+                            ? "Applicants is not available"
+                            : applicants,
                 },
             });
         } catch (error) {
@@ -70,6 +82,49 @@ module.exports = class ApplicantController {
             res.status(201).json({
                 ok: true,
                 message: "Applicant created successfully",
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async ApplicantUpdatePutController(req, res, next) {
+        try {
+            permissionChecker(
+                ["admin", "operator"],
+                req.user_permissions,
+                res.error
+            );
+
+            const applicant_id = req.params.applicant_id;
+
+            const applicant = await req.db.applicants.findOne({
+                where: { applicant_id },
+                raw: true,
+            });
+
+            if (!applicant) throw new res.error(404, "Applicant is not found");
+
+            const data = await UpdateApplicantValidation(req.body, res.error);
+
+            await req.db.applicants.update(
+                {
+                    applicant_name: data.name,
+                    applicant_description: data.description,
+                    applicant_source: data.source,
+                    applicant_birth_date: data.birth_date,
+                    applicant_phone: data.phone,
+                    applicant_gender: data.gender,
+                    applicant_status: data.status,
+                },
+                {
+                    where: { applicant_id },
+                }
+            );
+
+            res.status(200).json({
+                ok: true,
+                message: "Applicant updated successfully",
             });
         } catch (error) {
             next(error);

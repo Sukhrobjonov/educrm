@@ -128,4 +128,33 @@ module.exports = class Validations {
             })
             .validateAsync(data);
     }
+
+    static async UpdateApplicantValidation(data, error) {
+        return await joi
+            .object({
+                name: joi
+                    .string()
+                    .min(8)
+                    .max(64)
+                    .error(new error(400, "Name id is invalid")),
+                description: joi
+                    .string()
+                    .error(new error(400, "description id is invalid")),
+                birth_date: joi.date().error(new error(400, "Date is invalid")),
+                phone: joi
+                    .string()
+                    .regex(/^\+998(9[01345789]|3[3]|7[018])[0-9]{7}$/)
+                    .error(new error(400, "Phone number is invalid")),
+                source: joi.string().error(new error(400, "Source is invalid")),
+                gender: joi
+                    .string()
+                    .valid("male", "female")
+                    .error(new error(400, "This option isn't available")),
+                status: joi
+                    .string()
+                    .valid("waiting", "active", "cancelled")
+                    .error(new error(400, "This option isn't available")),
+            })
+            .validateAsync(data);
+    }
 };
