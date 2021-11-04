@@ -1,4 +1,5 @@
 const permissionChecker = require("../helpers/permissionChecker");
+const { AddApplicantValidation } = require("../modules/validations");
 
 module.exports = class ApplicantController {
     static async ApplicantGetController(req, res, next) {
@@ -29,6 +30,46 @@ module.exports = class ApplicantController {
                             ? "No applicants available"
                             : applications,
                 },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async ApplicantPostController(req, res, next) {
+        try {
+            permissionChecker(
+                ["admin", "operator"],
+                req.user_permissions,
+                res.error
+            );
+
+            const course_id = req.params.course_id;
+
+            const course = await req.db.courses.findOne({
+                where: { course_id },
+                raw: true,
+            });
+
+            if (!course) throw new res.error(404, "Course is not found");
+
+            const data = await AddApplicantValidation(req.body, res.error);
+
+            const applicant = await req.db.applicants.create({
+                course_id,
+                user_id: req.sessions.user_id,
+                applicant_name: data.name,
+                applicant_description: data.description,
+                applicant_source: data.source,
+                applicant_birth_date: data.birth_date,
+                applicant_phone: data.phone,
+                applicant_gender: data.gender,
+                applicant_status: "waiting",
+            });
+
+            res.status(201).json({
+                ok: true,
+                message: "Applicant created successfully",
             });
         } catch (error) {
             next(error);

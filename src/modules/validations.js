@@ -106,7 +106,6 @@ module.exports = class Validations {
                     .error(new error(400, "Name id is invalid")),
                 description: joi
                     .string()
-                    .required()
                     .error(new error(400, "description id is invalid")),
                 birth_date: joi
                     .date()
@@ -117,6 +116,10 @@ module.exports = class Validations {
                     .required()
                     .regex(/^\+998(9[01345789]|3[3]|7[018])[0-9]{7}$/)
                     .error(new error(400, "Phone number is invalid")),
+                source: joi
+                    .string()
+                    .required()
+                    .error(new error(400, "Source is invalid")),
                 gender: joi
                     .string()
                     .valid("male", "female")

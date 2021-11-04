@@ -29,7 +29,7 @@ module.exports = async (sequelize, Sequelize) => {
         },
         applicant_description: {
             type: Sequelize.TEXT(),
-            allowNull: false,
+            allowNull: true,
         },
         applicant_status: {
             type: Sequelize.ENUM,
