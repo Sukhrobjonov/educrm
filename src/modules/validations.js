@@ -62,9 +62,7 @@ module.exports = class Validations {
                 phone: joi
                     .string()
                     .required()
-                    .regex(
-                        /^\+998(9[012345789]|6[125679]|7[01234569])[0-9]{7}$/
-                    )
+                    .regex(/^\+998(9[01345789]|3[3]|7[018])[0-9]{7}$/)
                     .error(new error(400, "Phone number is invalid")),
                 skills: joi
                     .array()
@@ -93,6 +91,37 @@ module.exports = class Validations {
                     .min(0)
                     .required()
                     .error(new error(400, "Price is invalid")),
+            })
+            .validateAsync(data);
+    }
+
+    static async AddApplicantValidation(data, error) {
+        return await joi
+            .object({
+                name: joi
+                    .string()
+                    .min(8)
+                    .max(64)
+                    .required()
+                    .error(new error(400, "Name id is invalid")),
+                description: joi
+                    .string()
+                    .required()
+                    .error(new error(400, "description id is invalid")),
+                birth_date: joi
+                    .date()
+                    .required()
+                    .error(new error(400, "Date is invalid")),
+                phone: joi
+                    .string()
+                    .required()
+                    .regex(/^\+998(9[01345789]|3[3]|7[018])[0-9]{7}$/)
+                    .error(new error(400, "Phone number is invalid")),
+                gender: joi
+                    .string()
+                    .valid("male", "female")
+                    .required()
+                    .error(new error(400, "This option isn't available")),
             })
             .validateAsync(data);
     }
