@@ -1,6 +1,6 @@
 ## Course Route Requests
 
-#### 1. Course Create Endpoint
+#### 1. Course Create Post Endpoint
 
 ##### Request
 
@@ -90,7 +90,21 @@ Query body:
 
 `500 - Internal Server Error`
 
-#### 4. Course Delete Endpoint
+#### 4. Course Get One Endpoint
+
+##### Request
+
+`SERVER_URL/courses/:course_id`
+
+Headers: `Content-Type: "application/json"`
+
+##### Response status codes
+
+`200 - Course`
+
+`500 - Internal Server Error`
+
+#### 5. Course Delete Endpoint
 
 ##### Request
 
@@ -107,19 +121,5 @@ Permissions: `Admin`
 ##### Response status codes
 
 `200 - Course deleted successfully`
-
-`500 - Internal Server Error`
-
-#### 5. Course Get One Endpoint
-
-##### Request
-
-`SERVER_URL/courses/:course_id`
-
-Headers: `Content-Type: "application/json"`
-
-##### Response status codes
-
-`200 - Course`
 
 `500 - Internal Server Error`
