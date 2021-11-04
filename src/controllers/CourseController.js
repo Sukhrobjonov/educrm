@@ -7,9 +7,9 @@ module.exports = class CourseController {
         try {
             permissionChecker("admin", req.user_permissions, res.error);
 
-            let photo = req.files.photo;
+            const photo = req?.files?.photo;
 
-            if (photo && photo.size > 5 * 1024 * 1024) {
+            if (photo && photo?.size > 5 * 1024 * 1024) {
                 throw new res.error(
                     400,
                     "Size of photo must be less than 5 mb"

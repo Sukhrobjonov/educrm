@@ -1,4 +1,4 @@
 package-lock.json
 node_modules/
-src/public/uploads/*
+/src/public/uploads/*
 .env
