@@ -208,6 +208,11 @@ module.exports = class Validations {
                     .uuid()
                     .required()
                     .error(new error(400, "Group student id is invalid")),
+                group_id: joi
+                    .string()
+                    .uuid()
+                    .required()
+                    .error(new error(400, "Group id is invalid")),
             })
             .validateAsync(data);
     }
