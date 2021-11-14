@@ -200,4 +200,15 @@ module.exports = class Validations {
             })
             .validateAsync(data);
     }
+    static async GroupSetStudentValidation(data, error) {
+        return await joi
+            .object({
+                group_student_id: joi
+                    .string()
+                    .uuid()
+                    .required()
+                    .error(new error(400, "Group student id is invalid")),
+            })
+            .validateAsync(data);
+    }
 };
