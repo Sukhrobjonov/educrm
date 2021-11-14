@@ -1,8 +1,15 @@
+const permissionChecker = require("../helpers/permissionChecker");
 const { GroupCreateValidation } = require("../modules/validations");
 
 module.exports = class GroupController {
     static async GroupCreatePostController(req, res, next) {
         try {
+            permissionChecker(
+                ["admin", "teacher", "operator"],
+                req.user_permissions,
+                res.error
+            );
+
             const data = await GroupCreateValidation(req.body, res.error);
 
             const course = await req.db.courses.findOne({
@@ -44,6 +51,12 @@ module.exports = class GroupController {
 
     static async GroupUpdatePutController(req, res, next) {
         try {
+            permissionChecker(
+                ["admin", "teacher", "operator"],
+                req.user_permissions,
+                res.error
+            );
+
             const group_id = req.params.group_id;
 
             const group = await req.db.groups.findOne({
@@ -97,6 +110,38 @@ module.exports = class GroupController {
                 message: "Group updated successfully",
             });
         } catch (error) {
+            next(error);
+        }
+    }
+
+    static async GroupGetOneController(req, res, next) {
+        try {
+            permissionChecker(
+                ["admin", "teacher", "operator"],
+                req.user_permissions,
+                res.error
+            );
+
+            const group_id = req.params.group_id;
+
+            const group = await req.db.groups.findOne({
+                where: {
+                    group_id,
+                },
+                raw: true,
+            });
+
+            if (!group) throw new res.error(404, "Group not found");
+
+            res.status(200).json({
+                ok: true,
+                message: "Group",
+                data: {
+                    group,
+                },
+            });
+        } catch (error) {
+            console.log(error);
             next(error);
         }
     }
