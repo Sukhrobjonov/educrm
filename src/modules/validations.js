@@ -186,6 +186,16 @@ module.exports = class Validations {
                     .min(0)
                     .required()
                     .error(new error(400, "Course duration is invalid")),
+                teacher_id: joi
+                    .string()
+                    .uuid()
+                    .required()
+                    .error(new error(400, "Teacher id is invalid")),
+                course_id: joi
+                    .string()
+                    .uuid()
+                    .required()
+                    .error(new error(400, "Course id is invalid")),
             })
             .validateAsync(data);
     }
