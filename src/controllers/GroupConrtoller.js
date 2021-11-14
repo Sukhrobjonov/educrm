@@ -145,4 +145,28 @@ module.exports = class GroupController {
             next(error);
         }
     }
+
+    static async GroupGetAllController(req, res, next) {
+        try {
+            permissionChecker(
+                ["admin", "teacher", "operator"],
+                req.user_permissions,
+                res.error
+            );
+
+            const groups = await req.db.groups.findAll({
+                raw: true,
+            });
+
+            res.status(200).json({
+                ok: true,
+                message: "Groups list",
+                data: {
+                    groups,
+                },
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 };
