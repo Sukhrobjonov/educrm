@@ -203,11 +203,11 @@ module.exports = class Validations {
     static async GroupSetStudentValidation(data, error) {
         return await joi
             .object({
-                group_student_id: joi
+                applicant_id: joi
                     .string()
                     .uuid()
                     .required()
-                    .error(new error(400, "Group student id is invalid")),
+                    .error(new error(400, "Applicant id is invalid")),
                 group_id: joi
                     .string()
                     .uuid()
