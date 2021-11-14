@@ -127,16 +127,16 @@ module.exports = async function (db) {
         },
     });
 
-    await db.group_students.hasMany(db.applicants, {
+    await db.applicants.hasOne(db.group_students, {
         foreignKey: {
-            name: "group_student_id",
+            name: "applicant_id",
             allowNull: false,
         },
     });
 
-    await db.applicants.belongsTo(db.group_students, {
+    await db.group_students.belongsTo(db.applicants, {
         foreignKey: {
-            name: "group_student_id",
+            name: "applicant_id",
             allowNull: false,
         },
     });

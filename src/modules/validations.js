@@ -103,7 +103,7 @@ module.exports = class Validations {
                     .min(8)
                     .max(64)
                     .required()
-                    .error(new error(400, "Name id is invalid")),
+                    .error(new error(400, "Name is invalid")),
                 description: joi
                     .string()
                     .error(new error(400, "description id is invalid")),
@@ -167,11 +167,7 @@ module.exports = class Validations {
                     .max(5)
                     .required()
                     .error(new error(400, "Group time is invalid")),
-                status: joi
-                    .string()
-                    .valid("waiting", "studying", "finished", "closed")
-                    .required()
-                    .error(new error(400, "Group status is invalid")),
+
                 schedule: joi
                     .array()
                     .items(joi.string().min(2).max(32))
@@ -200,6 +196,7 @@ module.exports = class Validations {
             })
             .validateAsync(data);
     }
+
     static async GroupSetStudentValidation(data, error) {
         return await joi
             .object({
@@ -209,8 +206,7 @@ module.exports = class Validations {
                     .required()
                     .error(new error(400, "Applicant id is invalid")),
                 group_id: joi
-                    .string()
-                    .uuid()
+                    .number()
                     .required()
                     .error(new error(400, "Group id is invalid")),
             })
