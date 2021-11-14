@@ -157,4 +157,36 @@ module.exports = class Validations {
             })
             .validateAsync(data);
     }
+
+    static async GroupCreateValidation(data, error) {
+        return await joi
+            .object({
+                group_time: joi
+                    .string()
+                    .min(5)
+                    .max(5)
+                    .required()
+                    .error(new error(400, "Group time is invalid")),
+                group_status: string()
+                    .valid("waiting", "studying", "finished", "closed")
+                    .required()
+                    .error(new error(400, "Group status is invalid")),
+                group_schedule: joi
+                    .array()
+                    .items(joi.string().min(2).max(32))
+                    .required()
+                    .error(new error(400, "Group schedules are invalid")),
+                group_lesson_duration: joi
+                    .number()
+                    .min(0)
+                    .required()
+                    .error(new error(400, "Lesson duration is invalid")),
+                group_course_duration: joi
+                    .number()
+                    .min(0)
+                    .required()
+                    .error(new error(400, "Course duration is invalid")),
+            })
+            .validateAsync(data);
+    }
 };
