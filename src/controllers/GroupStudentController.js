@@ -52,8 +52,15 @@ module.exports = class GroupStudentController {
                 res.error
             );
 
+            const limit = req.query.limit || 15;
+            const page = req.query.page - 1 || 0;
+            const oreder = req.query.oreder === "DESC" ? "DESC" : "ASC";
+
             const group_students = await req.db.group_students.findAll({
                 raw: true,
+                limit,
+                offset: page * limit,
+                order: [["createdAt", oreder]],
             });
 
             res.status(200).json({
