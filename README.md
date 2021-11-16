@@ -7,3 +7,5 @@
 -   [Teacher Documentation](/src/docs/teacher.md)
 
 -   [Course Documentation](/src/docs/course.md)
+
+-   [Applicant Documentation](/src/docs/applicant.md)
