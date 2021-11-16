@@ -11,3 +11,5 @@
 -   [Applicant Documentation](/src/docs/applicant.md)
 
 -   [Group Documentation](/src/docs/group.md)
+
+-   [Students Documentation](/src/docs/students.md)
