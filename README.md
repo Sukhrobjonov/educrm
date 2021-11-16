@@ -9,3 +9,5 @@
 -   [Course Documentation](/src/docs/course.md)
 
 -   [Applicant Documentation](/src/docs/applicant.md)
+
+-   [Group Documentation](/src/docs/group.md)
